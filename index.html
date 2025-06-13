@@ -58,33 +58,32 @@
         }
         .tabs {
             display: flex;
+            flex-wrap: wrap; /* Changed to wrap for mobile */
             justify-content: center;
             border-bottom: 1px solid var(--color-border);
             padding: 0;
-            overflow-x: auto; /* Allow horizontal scrolling on small screens */
-            -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            /* Removed overflow-x: auto for mobile */
         }
-        .tabs::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari, Opera */
-            display: none;
-        }
+        /* No scrollbar needed for wrapped tabs */
 
         .tab-button {
-            flex-shrink: 0; /* Prevent buttons from shrinking */
-            min-width: fit-content; /* Ensure text doesn't wrap inside button */
+            flex-grow: 1; /* Allow growing */
+            flex-basis: 30%; /* Suggest a base width for wrapping, adjust as needed */
             text-align: center;
-            padding: 1rem 1rem; /* Adjusted padding for mobile */
+            padding: 0.8rem 0.5rem; /* Adjusted padding for mobile */
             cursor: pointer;
-            white-space: nowrap; /* Keep text on single line */
+            white-space: nowrap;
             font-weight: 600;
             color: var(--color-text-muted); /* 不活躍分頁文字色 */
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
             background-color: transparent;
             border-left: 1px solid var(--color-border);
+            margin: 0.1rem; /* Small margin between wrapped buttons */
+            border-radius: 0.5rem; /* Rounded corners for wrapped buttons */
         }
         .tab-button:first-child {
-            border-left: none;
+            border-left: none; /* No border-left for the first button in a row */
         }
         .tab-button.active {
             color: var(--color-norway-blue-accent); /* 活躍分頁文字色 */
@@ -95,36 +94,40 @@
             color: var(--color-text-dark);
             background-color: var(--color-body-bg); /* Hover時的微背景色 */
         }
-        @media (min-width: 768px) { /* Restore larger padding on medium screens */
+        @media (min-width: 768px) { /* Restore larger padding and flex behavior on larger screens */
             .tab-button {
                 padding: 1rem 1.5rem;
-                flex-grow: 1; /* Allow stretching on larger screens */
+                flex-grow: 1;
+                flex-basis: auto; /* Reset base width */
+                margin: 0; /* Remove margin */
+                border-radius: 0; /* Remove border radius */
+            }
+            .tab-button:first-child {
+                border-left: none; /* Only first child of the *flex container* gets no left border */
             }
             .tabs {
-                overflow-x: hidden; /* Hide scrollbar on larger screens */
+                flex-wrap: nowrap; /* No wrapping on larger screens */
             }
         }
+
 
         /* Sub-tabs styles */
         .sub-tabs {
             display: flex;
+            flex-wrap: wrap; /* Changed to wrap for mobile */
             justify-content: center;
             border-bottom: 1px solid var(--color-border);
             background-color: rgba(112, 147, 176, 0.05); /* 子分頁背景色 */
             border-radius: 0.75rem 0.75rem 0 0;
             margin-top: 1rem;
-            overflow-x: auto; /* Allow horizontal scrolling on small screens */
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            /* Removed overflow-x: auto for mobile */
         }
-        .sub-tabs::-webkit-scrollbar {
-            display: none;
-        }
+        /* No scrollbar needed for wrapped sub-tabs */
         .sub-tab-button {
-            flex-shrink: 0;
-            min-width: fit-content;
+            flex-grow: 1; /* Allow growing */
+            flex-basis: 45%; /* Suggest a base width for wrapping, adjust as needed */
             text-align: center;
-            padding: 0.75rem 1rem; /* Adjusted padding for mobile */
+            padding: 0.6rem 0.5rem; /* Adjusted padding for mobile */
             cursor: pointer;
             white-space: nowrap;
             font-weight: 600;
@@ -133,9 +136,11 @@
             transition: all 0.3s ease;
             background-color: transparent;
             border-left: 1px solid var(--color-border);
+            margin: 0.1rem; /* Small margin between wrapped buttons */
+            border-radius: 0.5rem; /* Rounded corners for wrapped buttons */
         }
         .sub-tab-button:first-child {
-            border-left: none;
+            border-left: none; /* No border-left for the first button in a row */
         }
         .sub-tab-button.active {
             color: var(--color-norway-red-accent); /* 活躍子分頁文字色 */
@@ -150,9 +155,12 @@
             .sub-tab-button {
                 padding: 0.75rem 1.25rem;
                 flex-grow: 1;
+                flex-basis: auto; /* Reset base width */
+                margin: 0; /* Remove margin */
+                border-radius: 0; /* Remove border radius */
             }
             .sub-tabs {
-                overflow-x: hidden;
+                flex-wrap: nowrap; /* No wrapping on larger screens */
             }
         }
 
@@ -633,7 +641,7 @@
             <!-- Tab content for "總覽" -->
             <div id="overview-tab" class="tab-content active">
                 <p class="text-base leading-relaxed text-gray-700 mb-4"> <!-- Adjusted font size and margin -->
-                    歡迎來到奧斯陸，這座位於挪威東南部的首都，坐落在奧斯陸峽灣的盡頭，被蒼翠的森林和連綿的丘陵環抱。這裡不僅是挪威的經濟、文化和政治中心，更是一座將深厚歷史底蘊與前瞻性現代精神完美融合的城市。
+                    歡迎來到奧斯陸，挪威首都。它位於奧斯陸峽灣盡頭，被森林丘陵環抱，是挪威經濟、文化、政治中心。這城市完美融合深厚歷史與現代精神。
                 </p>
 
                 <!-- Collapsible Card 1: 歷史淵源與城市發展 -->
@@ -644,7 +652,7 @@
                     </div>
                     <div class="collapsible-content">
                         <p class="text-base leading-relaxed text-gray-700"> <!-- Adjusted font size -->
-                            奧斯陸的歷史可以追溯到公元1000年左右，由維京國王哈拉爾三世於1040年左右建立，並在1299年成為挪威的首都。幾經戰火與重建，特別是1624年大火後，丹麥-挪威國王克里斯蒂安四世在原址西側重建了城市，並以他的名字命名為「克里斯蒂安尼亞」（Christiania）。直到1925年，這座城市才重新恢復了其古老的挪威名稱——奧斯陸。
+                            奧斯陸約公元1000年建立，1299年成為首都。1624年大火後，城市重建並更名「克里斯蒂安尼亞」，1925年恢復原名奧斯陸。
                         </p>
                     </div>
                 </div>
@@ -657,7 +665,7 @@
                     </div>
                     <div class="collapsible-content">
                         <p class="text-base leading-relaxed text-gray-700"> <!-- Adjusted font size -->
-                            作為一座綠色環保的城市，奧斯陸曾榮獲「歐洲綠色首都」稱號。這裡擁有豐富的維京時代遺產、中世紀堡壘、皇家宮殿，以及世界級的藝術博物館，如孟克博物館和維格朗雕塑公園。其現代建築，如奧斯陸歌劇院，也以創新設計成為城市新地標。無論是峽灣跳島，還是冬季滑雪，奧斯陸都提供獨特的北歐魅力與無限的戶外探險可能，讓訪客能找到屬於自己的樂趣。
+                            奧斯陸曾獲「歐洲綠色首都」稱號。擁有維京遺產、孟克博物館等藝術殿堂。歌劇院設計創新。無論跳島或滑雪，奧斯陸都提供獨特北歐魅力。
                         </p>
                     </div>
                 </div>
@@ -675,20 +683,20 @@
                         <div class="collapsible-header flex items-center">
                             <div class="itinerary-icon">✈️</div>
                             <div class="itinerary-title-group">
-                                <div class="itinerary-time-in-header">上午/下午 (預計13:35抵達)</div>
-                                <h4 class="itinerary-title in-header">抵達奧斯陸加勒穆恩機場（OSL）</h4>
+                                <div class="itinerary-time-in-header">下午1:35抵達</div>
+                                <h4 class="itinerary-title in-header">抵達奧斯陸（OSL）</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1"> <!-- Adjusted space-y -->
-                                    <li><strong>航班：</strong> Transavia HV5861，從愛因荷芬（EIN）出發，預計於下午1:35抵達奧斯陸加勒穆恩機場（OSL）。</li>
-                                    <li><strong>前往住宿地點（Hollendergata 2B）建議：：</strong>
+                                    <li>航班：Transavia HV5861，自愛因荷芬（EIN）出發。</li>
+                                    <li>前往住宿（Hollendergata 2B）：
                                         <ul class="list-circle list-inside ml-4 space-y-0.5"> <!-- Adjusted ml and space-y -->
-                                            <li><strong>Flytoget（機場快線列車）：</strong> 最快選擇，約19分鐘抵達奧斯陸中央車站。16歲以下兒童在成人陪同下免費。</li>
-                                            <li><strong>Vy列車（國家鐵路）：：</strong> 更經濟實惠的選擇，奧斯陸通行證涵蓋此費用。</li>
-                                            <li><strong>Bolt（叫車服務）：</strong> 門到門服務，適合攜帶大量行李或清晨/深夜出行。</li>
+                                            <li>Flytoget：最快，約19分鐘抵奧斯陸中央車站（16歲以下兒童免費）。</li>
+                                            <li>Vy列車：較經濟，奧斯陸通行證涵蓋。</li>
+                                            <li>Bolt：門到門，適合行李多或夜間。</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -700,7 +708,7 @@
                         <div class="collapsible-header flex items-center">
                             <div class="itinerary-icon">🏠</div>
                             <div class="itinerary-title-group">
-                                <div class="itinerary-time-in-header">下午3:00以後</div>
+                                <div class="itinerary-time-in-header">下午3:00後</div>
                                 <h4 class="itinerary-title in-header">入住與安頓</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
@@ -708,8 +716,8 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>您的住宿確認入住時間為下午3:00。</li>
-                                    <li>抵達後，請花時間辦理入住、整理行李並安頓。</li>
+                                    <li>入住時間：下午3:00。</li>
+                                    <li>抵達後，辦理入住，整理行李。</li>
                                 </ul>
                             </div>
                         </div>
@@ -727,8 +735,8 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>建議在您住宿地點Hollendergata 2B周邊的<strong>Gamle Oslo（老城區）</strong>進行一次輕鬆悠閒的漫步，熟悉周圍環境。</li>
-                                    <li>可以步行前往附近的<strong>奧斯陸公車總站（Oslo Bussterminal）</strong>或<strong>奧斯陸中央車站（Oslo Central Station）</strong>區域，以便熟悉未來幾天的主要交通樞紐。</li>
+                                    <li>漫步住宿周邊Gamle Oslo（老城區），熟悉環境。</li>
+                                    <li>可步行至奧斯陸公車總站或中央車站，熟悉交通。</li>
                                 </ul>
                             </div>
                         </div>
@@ -744,17 +752,17 @@
                             <div class="itinerary-icon">🖼️</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header">上午</div>
-                                <h4 class="itinerary-title in-header">埃克貝格公園（Ekebergparken）藝術與全景</h4>
+                                <h4 class="itinerary-title in-header">埃克貝格公園：藝術與全景</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>前往<strong>埃克貝格公園</strong>，探索園內藝術雕塑。</li>
-                                    <li>欣賞俯瞰奧斯陸市區和峽灣的壯麗全景。</li>
-                                    <li>非常適合悠閒漫步、欣賞藝術和享受自然風光。</li>
-                                    <li><strong>建議：：</strong> 搭乘公共交通工具前往公園。</li>
+                                    <li>探索埃克貝格公園內雕塑。</li>
+                                    <li>欣賞奧斯陸市區及峽灣全景。</li>
+                                    <li>適合漫步、藝術欣賞、自然風光。</li>
+                                    <li>建議：搭乘公共交通。</li>
                                 </ul>
                             </div>
                         </div>
@@ -765,17 +773,17 @@
                             <div class="itinerary-icon">🏊‍♀️</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header">下午</div>
-                                <h4 class="itinerary-title in-header">Sørenga Sjøbad 玩水體驗</h4>
+                                <h4 class="itinerary-title in-header">Sørenga Sjøbad 玩水</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>前往戶外海水泳池<strong>Sørenga Sjøbad</strong>，享受游泳、日光浴。</li>
-                                    <li>欣賞峽灣、歌劇院和Barcode區的景色。</li>
-                                    <li>此處為免費開放。</li>
-                                    <li><strong>交通方式：：</strong> 可步行約15-20分鐘從歌劇院或中央車站，或搭乘地鐵轉電車前往。</li>
+                                    <li>戶外海水泳池，游泳、日光浴。</li>
+                                    <li>欣賞峽灣、歌劇院、Barcode區。</li>
+                                    <li>免費開放。</li>
+                                    <li>交通：可步行或搭乘地鐵轉電車。</li>
                                 </ul>
                             </div>
                         </div>
@@ -786,15 +794,15 @@
                             <div class="itinerary-icon">🚶‍♀️</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header">傍晚</div>
-                                <h4 class="itinerary-title in-header">海濱漫步</h4>
+                                <h4 class="itinerary-title in-header">阿克爾碼頭海濱漫步</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>在充滿活力的海濱長廊<strong>阿克爾碼頭（Aker Brygge）</strong>悠閒漫步，欣賞峽灣美景。</li>
-                                    <li>該區域以其現代建築、時尚商店和熱鬧氛圍而聞名。</li>
+                                    <li>充滿活力的海濱長廊，欣賞峽灣美景。</li>
+                                    <li>以現代建築、時尚商店和熱鬧氛圍聞名。</li>
                                 </ul>
                             </div>
                         </div>
@@ -817,7 +825,7 @@
                         <div class="collapsible-header flex items-center">
                             <div class="itinerary-icon">🤝</div>
                             <div class="itinerary-title-group">
-                                <div class="itinerary-time-in-header">7月19日 中午 (預計11:00抵達)</div>
+                                <div class="itinerary-time-in-header">7月19日 中午</div>
                                 <h4 class="itinerary-title in-header">睿家抵達與安頓</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
@@ -825,8 +833,8 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>睿家搭乘土耳其航空TK1751航班從伊斯坦堡（IST）飛往奧斯陸（OSL），預計於上午11:00抵達奧斯陸加勒穆恩機場。</li>
-                                    <li>約在中午時分抵達奧斯陸中央車站（Oslo S），協助睿家輕鬆來到住宿地點安頓下來。</li>
+                                    <li>睿家搭土耳其航空TK1751，11:00抵奧斯陸。</li>
+                                    <li>中午抵奧斯陸中央車站，協助安頓。</li>
                                 </ul>
                             </div>
                         </div>
@@ -837,17 +845,17 @@
                         <div class="collapsible-header flex items-center">
                             <div class="itinerary-icon">🗺️</div>
                             <div class="itinerary-title-group">
-                                <div class="itinerary-time-in-header">7月20日-7月21日</div>
-                                <h4 class="itinerary-title in-header">兩家一起遊：奧斯陸核心探索</h4>
+                                <div class="itinerary-time-in-header">7月20-21日</div>
+                                <h4 class="itinerary-title in-header">兩家奧斯陸核心探索</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>這兩天將是兩家人共同深入探索奧斯陸的精華。</li>
-                                    <li>行程將涵蓋城市中心的文化與歷史地標、比格迪島上的著名博物館，以及維格朗公園的藝術氛圍和霍爾門科倫滑雪跳台的壯麗全景。</li>
-                                    <li>詳細活動請參考「行程建議」子分頁。</li>
+                                    <li>兩家共同探索奧斯陸精華。</li>
+                                    <li>涵蓋市區地標、比格迪島博物館、維格朗公園藝術、霍爾門科倫滑雪跳台。</li>
+                                    <li>詳情請見「行程建議」。</li>
                                 </ul>
                             </div>
                         </div>
@@ -859,15 +867,15 @@
                             <div class="itinerary-icon">🚆</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header">7月22日 清晨 (5:45出發)</div>
-                                <h4 class="itinerary-title in-header">前往奧斯陸中央車站與啟程挪威縮影</h4>
+                                <h4 class="itinerary-title in-header">啟程挪威縮影</h4>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>為確保上午6:20的火車準時，建議最遲於5:45從住宿地點出發，可選擇預訂Bolt或計程車，或提前確認公共交通。</li>
-                                    <li>從奧斯陸中央車站搭乘火車，開啟令人嘆為觀止的挪威縮影之旅。火車票費用另計。</li>
+                                    <li>5:45從住宿出發，確保6:20火車準時。</li>
+                                    <li>從奧斯陸中央車站搭火車，開啟挪威縮影之旅（車票另計）。</li>
                                 </ul>
                             </div>
                         </div>
@@ -884,17 +892,16 @@
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header"></div>
                                 <h4 class="itinerary-title in-header">奧斯陸歌劇院</h4>
-                                <p class="itinerary-description-short">現代建築傑作，登屋頂賞峽灣全景。</p>
+                                <p class="itinerary-description-short">現代建築傑作，屋頂覽峽灣全景。</p>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>現代建築傑作，可直接步行到其傾斜的屋頂。</li>
-                                    <li>欣賞比約維卡、城市天際線和海濱的絕佳全景。</li>
-                                    <li>大廳區域免費開放參觀。</li>
-                                    <li>表演門票費用另計，詳情請查詢官網。</li>
+                                    <li>現代建築傑作，可步行至傾斜屋頂。</li>
+                                    <li>欣賞比約維卡、城市天際線、海濱全景。</li>
+                                    <li>大廳免費參觀；表演門票另計。</li>
                                 </ul>
                             </div>
                         </div>
@@ -914,10 +921,10 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>歷史悠久的堡壘和城堡建築群，可追溯到13世紀末。</li>
-                                    <li>深入了解挪威的歷史。</li>
-                                    <li>提供奧斯陸峽灣的壯麗景色。</li>
-                                    <li>堡壘區域免費參觀；博物館成人票約 190 挪威克朗。</li>
+                                    <li>13世紀末歷史堡壘與城堡群。</li>
+                                    <li>深入了解挪威歷史。</li>
+                                    <li>欣賞奧斯陸峽灣壯麗景色。</li>
+                                    <li>堡壘免費；博物館成人約 190 挪威克朗。</li>
                                 </ul>
                             </div>
                         </div>
@@ -929,7 +936,7 @@
                             <div class="itinerary-icon">👑</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header"></div>
-                                <h4 class="itinerary-title in-header">挪威皇宮與卡爾約翰斯大道</h4>
+                                <h4 class="itinerary-title in-header">挪威皇宮與大道</h4>
                                 <p class="itinerary-description-short">探索皇室居所，漫步奧斯陸主要街道。</p>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
@@ -937,9 +944,9 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>挪威皇室官方居所，可探索其外部和周圍的皇宮公園。</li>
-                                    <li>漫步於奧斯陸主要街道卡爾約翰斯大道，感受城市活力。</li>
-                                    <li>外部及公園免費參觀；內部導覽需購票，成人約 220 挪威克朗。</li>
+                                    <li>挪威皇室居所，可探索外部及皇宮公園。</li>
+                                    <li>漫步奧斯陸主要街道卡爾約翰斯大道。</li>
+                                    <li>外部及公園免費；內部導覽需購票，成人約 220 挪威克朗。</li>
                                 </ul>
                             </div>
                         </div>
@@ -951,7 +958,7 @@
                             <div class="itinerary-icon">🛥️</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header"></div>
-                                <h4 class="itinerary-title in-header">阿克爾碼頭（Aker Brygge）</h4>
+                                <h4 class="itinerary-title in-header">阿克爾碼頭</h4>
                                 <p class="itinerary-description-short">海濱長廊，現代建築與峽灣美景。</p>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
@@ -959,9 +966,10 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>奧斯陸充滿活力的海濱長廊，以其現代建築、時尚商店和熱鬧氛圍而聞名。</li>
-                                    <li>提供峽灣和過往船隻的美麗景色，是悠閒漫步、享受戶外咖啡或用餐的絕佳地點。</li>
-                                    <li>也是前往比格迪島（Bygdøy Island）博物館群的渡輪出發點。</li>
+                                    <li>奧斯陸充滿活力的海濱長廊。</li>
+                                    <li>現代建築、時尚商店、熱鬧氛圍。</li>
+                                    <li>欣賞峽灣美景，戶外咖啡或用餐。</li>
+                                    <li>前往比格迪島渡輪出發點。</li>
                                 </ul>
                             </div>
                         </div>
@@ -975,16 +983,17 @@
                             <div class="itinerary-icon">🗿</div>
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header"></div>
-                                <h4 class="itinerary-title in-header">維格朗公園與弗羅格納區</h4>
-                                <p class="itinerary-description-short">奧斯陸最大公園，雕塑藝術與休閒體驗。</p>
+                                <h4 class="itinerary-title in-header">維格朗公園</h4>
+                                <p class="itinerary-description-short">奧斯陸最大公園，雕塑藝術與休閒。</p>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>奧斯陸最大、最著名的公園，擁有古斯塔夫·維格朗創作的200多件雕塑作品。</li>
-                                    <li>提供獨特的藝術和休閒體驗，適合所有年齡層。</li>
+                                    <li>奧斯陸最大、最著名公園。</li>
+                                    <li>古斯塔夫·維格朗200多件雕塑作品。</li>
+                                    <li>獨特的藝術與休閒體驗。</li>
                                     <li>公園免費參觀。</li>
                                 </ul>
                             </div>
@@ -1005,10 +1014,10 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>專為愛德華·孟克而設，展示他許多重要作品。</li>
-                                    <li>探索他的藝術與人生旅程。</li>
-                                    <li>博物館頂層提供絕佳城市景觀。</li>
-                                    <li>成人票約 180-200 挪威克朗（線上購買較優惠）；17歲以下兒童免費；持奧斯陸通行證免費。</li>
+                                    <li>愛德華·孟克專屬博物館，展示重要作品。</li>
+                                    <li>探索藝術與人生旅程。</li>
+                                    <li>頂層提供城市絕佳景觀。</li>
+                                    <li>成人票約 180-200 挪威克朗；17歲以下免費；奧斯陸通行證免費。</li>
                                 </ul>
                             </div>
                         </div>
@@ -1030,15 +1039,15 @@
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>一個美麗的半島，以其世界級博物館的集中而聞名。</li>
-                                    <li>從阿克爾碼頭搭乘渡輪可達，渡輪費用包含在奧斯陸通行證中。</li>
-                                    <li>建議選擇一兩個感興趣的博物館，例如：
+                                    <li>美麗半島，世界級博物館集中地。</li>
+                                    <li>阿克爾碼頭渡輪可達，通行證含渡輪費。</li>
+                                    <li>建議選擇感興趣博物館，如：
                                         <ul class="list-circle list-inside ml-4 space-y-0.5">
-                                            <li><strong>挪威民俗博物館 (Norsk Folkemuseum)</strong>：成人票約 195 挪威克朗；18歲以下兒童免費。</li>
-                                            <li><strong>前進號博物館（The Fram Museum）：</strong> 專門介紹挪威極地探險，展示了原始的<strong>前進號船</strong>。成人票約 180 挪威克朗；兒童/學生約 70 挪威克朗；持奧斯陸通行證免費。</li>
+                                            <li>挪威民俗博物館：成人約 195 挪威克朗；18歲以下免費。</li>
+                                            <li>前進號博物館：極地探險，展示前進號船。成人約 180 挪威克朗；兒童/學生約 70 挪威克朗；通行證免費。</li>
                                         </ul>
                                     </li>
-                                    <li><strong>請注意：</strong> 維京船博物館目前因翻新而關閉，預計2026年重新開放為維京時代博物館。</li>
+                                    <li>注意：維京船博物館目前關閉，2026年重開為維京時代博物館。</li>
                                 </ul>
                             </div>
                         </div>
@@ -1051,16 +1060,16 @@
                             <div class="itinerary-title-group">
                                 <div class="itinerary-time-in-header"></div>
                                 <h4 class="itinerary-title in-header">霍爾門科倫滑雪跳台</h4>
-                                <p class="itinerary-description-short">標誌性滑雪跳台，賞城市與峽灣全景。</p>
+                                <p class="itinerary-description-short">標誌性跳台，賞城市與峽灣全景。</p>
                             </div>
                             <span class="arrow-icon">&#9660;</span>
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>奧斯陸的標誌性地標，可一窺挪威冬季運動的歷史。</li>
-                                    <li>欣賞城市、奧斯陸峽灣和周圍森林的壯麗全景。</li>
-                                    <li>成人票約 190 挪威克朗；18歲以下兒童約 95 挪威克朗；持奧斯陸通行證免費。</li>
+                                    <li>奧斯陸標誌性地標，了解挪威冬季運動歷史。</li>
+                                    <li>欣賞城市、奧斯陸峽灣、周圍森林壯麗全景。</li>
+                                    <li>成人票約 190 挪威克朗；18歲以下約 95 挪威克朗；通行證免費。</li>
                                 </ul>
                             </div>
                         </div>
@@ -1075,27 +1084,23 @@
                 <div class="card mb-8">
                     <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">通行證優勢</h3> <!-- Adjusted font size and margin -->
                     <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
-                        奧斯陸通行證為您的奧斯陸之旅提供卓越的價值。它涵蓋了：
+                        奧斯陸通行證讓您的旅程超值：
                     </p>
                     <ul class="list-disc list-inside space-y-1.5 text-base text-gray-700"> <!-- Adjusted space-y and font size -->
-                        <li>免費進入眾多博物館和景點
-                            <a href="#" class="details-link" data-modal-target="freeAttractionsModal">詳情按此</a>
-                        </li>
-                        <li>Ruter公共交通無限次免費乘車：在奧斯陸及其周邊地區（包括1、2、3、4V和4N區）的Ruter公共交通系統上（包括公車、電車、地鐵和當地渡輪）享受無限次免費乘車。這讓您在城市內移動更便捷，無需擔心購票問題。</li>
-                        <li>往返機場的Vy列車費用：通行證涵蓋了乘坐國家鐵路公司Vy列車往返奧斯陸加勒穆恩機場（Oslo Airport Gardermoen）的交通費用。</li>
-                        <li>觀光、景點及部分餐廳折扣
-                            <a href="#" class="details-link" data-modal-target="discountedOffersModal">詳情按此</a>
-                        </li>
+                        <li>免費進入多數博物館與景點 <a href="#" class="details-link" data-modal-target="freeAttractionsModal">詳情</a></li>
+                        <li>Ruter公共交通無限次免費搭乘（公車、電車、地鐵、渡輪）。</li>
+                        <li>往返機場Vy列車費用包含。</li>
+                        <li>觀光、景點及部分餐廳折扣 <a href="#" class="details-link" data-modal-target="discountedOffersModal">詳情</a></li>
                     </ul>
                     <p class="text-base font-medium text-[var(--color-norway-red-accent)] mt-3"> <!-- Adjusted font size and margin -->
-                        <strong>強烈建議：</strong>購買一張奧斯陸通行證，並策略性地啟用，以最大化其效益。例如，您可以選擇在遊覽博物館和需要頻繁搭乘公共交通的日期啟用。
+                        <strong>強烈建議：</strong>購買通行證，策略性啟用以最大化效益。
                     </p>
                 </div>
 
                 <div class="card">
                     <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">效期與購買方式</h3> <!-- Adjusted font size and margin -->
                     <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
-                        有效期選擇：通行證有24、48或72小時三種效期可供選擇，您可以根據您的行程長度選擇最適合的時長。
+                        效期可選24、48或72小時，依行程選擇。
                     </p>
                     <div class="table-responsive-wrapper">
                         <table class="price-table">
@@ -1124,7 +1129,7 @@
                         </table>
                     </div>
                     <p class="text-base font-medium text-[var(--color-norway-red-accent)] mt-3"> <!-- Adjusted font size and margin -->
-                        <strong>注意：</strong>奧斯陸通行證不適用於更快的Flytoget機場快線列車或Flybussen。如果您的機場交通計劃使用這兩種方式，則需要另外購票。
+                        <strong>注意：</strong>通行證不含Flytoget機場快線或Flybussen。
                     </p>
                 </div>
             </div>
@@ -1137,11 +1142,11 @@
                 <div class="card mb-8">
                     <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">推薦美食 🍽️</h3>
                     <ul class="list-disc list-inside space-y-2 text-base text-gray-700"> <!-- Adjusted font size -->
-                        <li><strong>挪威鮭魚 (Norwegian Salmon)</strong>：挪威的招牌美食，以其新鮮和高品質聞名，可製成煙燻、烤或生食等。</li>
-                        <li><strong>棕色起司 (Brunost)</strong>：挪威特有的焦糖化乳清起司，味道香甜濃郁，通常搭配麵包或華夫餅享用。</li>
-                        <li><strong>羊肉湯 (Fårikål)</strong>：挪威的國菜，由羊肉、高麗菜和黑胡椒慢燉而成，是冬季暖心的經典菜餚。</li>
-                        <li><strong>肉丸 (Kjøttkaker)</strong>：挪威家常菜，通常搭配馬鈴薯、肉汁和豌豆泥。</li>
-                        <li><strong>魚湯 (Fiskesuppe)</strong>：以新鮮魚肉和海鮮為主的奶油湯，通常加入蔬菜和香草，味道鮮美。</li>
+                        <li><strong>挪威鮭魚：</strong> 新鮮高品質，可煙燻、烤或生食。</li>
+                        <li><strong>棕色起司 (Brunost)：</strong> 特有焦糖化乳清起司，香甜濃郁，搭麵包或華夫餅。</li>
+                        <li><strong>羊肉湯 (Fårikål)：</strong> 挪威國菜，羊肉、高麗菜、黑胡椒慢燉，冬季暖心。</li>
+                        <li><strong>肉丸 (Kjøttkaker)：</strong> 挪威家常菜，通常搭馬鈴薯、肉汁、豌豆泥。</li>
+                        <li><strong>魚湯 (Fiskesuppe)：</strong> 新鮮魚肉海鮮奶油湯，加入蔬菜香草，味道鮮美。</li>
                     </ul>
                 </div>
 
@@ -1149,20 +1154,20 @@
                 <div class="card">
                     <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">推薦超市好物 🛒</h3>
                     <ul class="list-disc list-inside space-y-2 text-base text-gray-700"> <!-- Adjusted font size -->
-                        <li><strong>Fløytemysost 棕色乳酪：</strong> 挪威最具代表性的產品之一，口感獨特帶有焦糖甜味，非常適合搭配麵包或華夫餅。</li>
-                        <li><strong>Sardiner 沙丁魚罐頭：：</strong> 挪威海岸盛產沙丁魚，罐頭產品新鮮美味，是理想的伴手禮。</li>
-                        <li><strong>Stabburet 番茄鯖魚罐頭：：</strong> 挪威家庭的經典食品，簡單美味，可以直接食用或搭配麵包。</li>
-                        <li><strong>Kaviar 魚子抹醬：：</strong> 以鱈魚子製成的牙膏狀抹醬，味道鮮美，是早餐或點心的好選擇。</li>
-                        <li><strong>冷凍鮭魚 (Frozen Salmon)：：</strong> 挪威的鮭魚品質世界聞名，冷凍鮭魚方便攜帶，是將挪威海味帶回家的最佳方式。</li>
-                        <li><strong>Fishkekaker 魚板：：</strong> 挪威傳統魚製品，口感Q彈，可作為小吃或烹飪食材。</li>
-                        <li><strong>其他冷藏/冷凍食品：：</strong> 挪威超市的烤雞系列、蟹肉棒和煙燻熱狗都值得嘗試，方便即食。</li>
-                        <li><strong>新鮮水果：：</strong> 葡萄、香蕉、蜜桃和莓果等，品質優良且新鮮。</li>
-                        <li><strong>牛奶/優格/穀物奶酪：：</strong> 挪威的乳製品品質極高，特別是TINE品牌的產品。</li>
-                        <li><strong>Chips：：</strong> 各種口味的洋芋片，作為零食的好選擇。</li>
-                        <li><strong>Wasa 薄脆全麥夾心餅乾：：</strong> 瑞典品牌，但在挪威也很受歡迎，是健康的零食選項。</li>
-                        <li><strong>Litago & TINE 巧克力牛奶：：</strong> 挪威當地熱門的巧克力牛奶品牌，香濃可口。</li>
-                        <li><strong>NESCAFÉ 雀巢即溶咖啡：：</strong> 在挪威超市也很常見，方便快速沖泡。</li>
-                        <li><strong>挪威Lofoten Tørrfisk snacks 曬乾鱈魚片/鱈魚絲：：</strong> 羅弗敦群島的特色產品，風味獨特，是受歡迎的下酒菜或零食。</li>
+                        <li><strong>Fløytemysost 棕色乳酪：</strong> 挪威代表產品，焦糖甜味，搭麵包或華夫餅。</li>
+                        <li><strong>Sardiner 沙丁魚罐頭：</strong> 新鮮美味，理想伴手禮。</li>
+                        <li><strong>Stabburet 番茄鯖魚罐頭：</strong> 挪威家庭經典，簡單美味，可直接食用。</li>
+                        <li><strong>Kaviar 魚子抹醬：</strong> 鱈魚子製牙膏狀抹醬，早餐點心好選擇。</li>
+                        <li><strong>冷凍鮭魚：</strong> 品質世界聞名，方便攜帶。</li>
+                        <li><strong>Fishkekaker 魚板：</strong> 傳統魚製品，口感Q彈，小吃或食材。</li>
+                        <li><strong>冷藏/冷凍食品：</strong> 烤雞、蟹肉棒、煙燻熱狗等，方便即食。</li>
+                        <li><strong>新鮮水果：</strong> 葡萄、香蕉、蜜桃、莓果等，品質優良。</li>
+                        <li><strong>牛奶/優格/穀物奶酪：</strong> 挪威乳製品品質高，TINE品牌推薦。</li>
+                        <li><strong>Chips：</strong> 各種口味洋芋片。</li>
+                        <li><strong>Wasa 薄脆全麥夾心餅乾：</strong> 健康零食選項。</li>
+                        <li><strong>Litago & TINE 巧克力牛奶：</strong> 挪威當地熱門，香濃可口。</li>
+                        <li><strong>NESCAFÉ 雀巢即溶咖啡：</strong> 挪威超市常見，方便快速沖泡。</li>
+                        <li><strong>挪威Lofoten Tørrfisk snacks 曬乾鱈魚片/鱈魚絲：</strong> 羅弗敦特色，獨特風味，下酒菜或零食。</li>
                     </ul>
                 </div>
             </div>
@@ -1174,17 +1179,17 @@
                     <div class="card col-span-2"> <!-- Spans two columns for better layout -->
                         <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">交通指南</h3> <!-- Adjusted font size and margin -->
                         <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
-                            奧斯陸擁有廣泛且高效的公共交通網絡，由Ruter公司管理，包括公車、電車、地鐵（T-bane）和渡輪。這個網絡讓貴賓在城市內移動和前往景點變得輕而易舉。
+                            奧斯陸公共交通高效便捷，由Ruter公司管理（公車、電車、地鐵、渡輪）。
                         </p>
-                        <h4 class="text-lg font-semibold text-gray-800 mb-2 mt-3">Ruter App下載（您的必備導航工具）</h4> <!-- Adjusted font size and margin -->
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 mt-3">Ruter App下載（必備導航）</h4> <!-- Adjusted font size and margin -->
                         <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
-                            「Ruter」是奧斯陸和阿克什胡斯郡的官方公共交通應用程式。它提供全面的功能，讓您能夠查詢所有班次、規劃點對點行程、實時查看交通工具位置、並直接在手機上購買車票。<strong>建議：：</strong>強烈建議您在抵達奧斯陸之前或抵達後立即下載此應用程式。
+                            Ruter App是奧斯陸官方交通應用。可查班次、規劃行程、實時交通、手機購票。<strong>建議：</strong>抵奧斯陸後立即下載。
                         </p>
                         <h4 class="text-lg font-semibold text-gray-800 mb-2 mt-3">機場接送</h4> <!-- Adjusted font size and margin -->
                         <ul class="list-disc list-inside space-y-1.5 text-base text-gray-700"> <!-- Adjusted space-y and font size -->
-                            <li><strong>Flytoget（機場快線列車）：</strong> 成人單程票價約 230-252 挪威克朗。</li>
-                            <li><strong>Vy列車（國家鐵路）：：</strong> 成人單程票價約 120 挪威克朗。</li>
-                            <li><strong>Bolt（叫車服務）：：</strong> 單程費用約 900-1300 挪威克朗。</li>
+                            <li><strong>Flytoget（機場快線）：</strong> 單程約 230-252 挪威克朗。</li>
+                            <li><strong>Vy列車（國家鐵路）：</strong> 單程約 120 挪威克朗。</li>
+                            <li><strong>Bolt（叫車服務）：</strong> 單程約 900-1300 挪威克朗。</li>
                         </ul>
                     </div>
 
@@ -1192,12 +1197,12 @@
                     <div class="card col-span-2"> <!-- Spans two columns for better layout -->
                         <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">實用提示</h3> <!-- Adjusted font size and margin -->
                         <ul class="list-disc list-inside space-y-1.5 text-base text-gray-700"> <!-- Adjusted space-y and font size -->
-                            <li><strong>貨幣：：</strong> 挪威克朗（NOK）。信用卡廣泛接受。</li>
-                            <li><strong>小費：：</strong> 非強制性，服務費已含。</li>
-                            <li><strong>語言：：</strong> 官方語言挪威語，英語廣泛使用。</li>
-                            <li><strong>緊急電話：：</strong> 112（警察）、110（消防）、113（救護車）。</li>
-                            <li><strong>天氣：：</strong> 七月通常溫和宜人，建議攜帶多層衣物和雨具。</li>
-                            <li><strong>保持水分：：</strong> 奧斯陸自來水水質佳，建議攜帶可重複使用的水瓶。</li>
+                            <li><strong>貨幣：</strong>挪威克朗（NOK），信用卡廣泛接受。</li>
+                            <li><strong>小費：</strong>非強制性，服務費已含。</li>
+                            <li><strong>語言：</strong>挪威語（官方），英語廣泛使用。</li>
+                            <li><strong>緊急電話：</strong>112（警察）、110（消防）、113（救護車）。</li>
+                            <li><strong>天氣：</strong>七月通常溫和，建議攜帶多層衣物和雨具。</li>
+                            <li><strong>保持水分：</strong>奧斯陸自來水水質佳，建議攜帶水瓶。</li>
                         </ul>
                     </div>
                 </div>
@@ -1237,24 +1242,24 @@
     <div id="freeAttractionsModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">奧斯陸通行證涵蓋的免費景點與博物館</h3> <!-- Adjusted font size and margin -->
+            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">奧斯陸通行證免費景點</h3> <!-- Adjusted font size and margin -->
             <ul class="list-disc list-inside text-base text-gray-700 space-y-2"> <!-- Adjusted font size and space-y -->
                 <li>阿克斯胡斯堡壘 (Akershus Fortress) 博物館部分 (堡壘區域免費)</li>
                 <li>康提基博物館 (The Kon-Tiki Museum)</li>
-                <li><strong>前進號博物館（The Fram Museum）：</strong>專門介紹挪威極地探險，展示了原始的<strong>前進號船</strong>。</li>
+                <li><strong>前進號博物館（The Fram Museum）：</strong>極地探險，展示前進號船。</li>
                 <li>挪威民俗博物館 (Norsk Folkemuseum)</li>
                 <li>孟克博物館 (The Munch Museum)</li>
-                <li>霍爾門科倫滑雪跳台 (Holmenkollen Ski Jump) 與博物館</li>
+                <li>霍爾門科倫滑雪跳台與博物館</li>
                 <li>國家美術館 (National Museum)</li>
                 <li>奧斯陸市立博物館 (Oslo City Museum)</li>
                 <li>維格朗博物館 (Vigeland Museum)</li>
                 <li>諾貝爾和平中心 (Nobel Peace Center)</li>
-                <li>奧斯陸歌劇院導覽 (Opera House guided tours - 部分費用可能減免)</li>
+                <li>奧斯陸歌劇院導覽 (部分費用可能減免)</li>
                 <li>奧斯陸峽灣公共渡輪 (前往比格迪島等)</li>
                 <!-- Add more popular attractions here -->
             </ul>
             <p class="text-xs text-gray-500 mt-3"> <!-- Adjusted font size and margin -->
-                此列表為常見且可能涵蓋的景點，建議在使用前透過奧斯陸通行證官方應用程式或網站再次確認最新資訊及開放時間。
+                此列表為常見涵蓋景點，請查官方應用程式或網站確認最新資訊及開放時間。
             </p>
         </div>
     </div>
@@ -1263,18 +1268,18 @@
     <div id="discountedOffersModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">奧斯陸通行證提供的觀光與餐廳折扣</h3> <!-- Adjusted font size and margin -->
+            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">奧斯陸通行證優惠</h3> <!-- Adjusted font size and margin -->
             <ul class="list-disc list-inside text-base text-gray-700 space-y-2"> <!-- Adjusted font size and space-y -->
                 <li>部分觀光巴士及峽灣觀光遊船折扣</li>
-                <li>奧斯陸滑雪中心 (Oslo Winter Park) 滑雪票折扣 (冬季適用)</li>
+                <li>奧斯陸滑雪中心滑雪票折扣 (冬季適用)</li>
                 <li>Tusenfryd 遊樂園門票折扣</li>
-                <li>部分參與酒店及餐廳的餐飲折扣 (具體折扣和參與商家請參考官方應用程式或網站)</li>
+                <li>部分參與酒店及餐廳餐飲折扣</li>
                 <li>自行車租賃折扣</li>
                 <li>部分商店購物折扣</li>
                 <!-- Add more typical discounted offers here -->
             </ul>
             <p class="text-xs text-gray-500 mt-3"> <!-- Adjusted font size and margin -->
-                此列表為常見折扣類型，具體折扣比例、參與商家及條款可能隨時變動，建議在使用前透過奧斯陸通行證官方應用程式或網站確認最新資訊。
+                此列表為常見折扣類型，具體折扣、商家及條款可能變動，請查官方應用程式或網站確認最新資訊。
             </p>
         </div>
     </div>
