@@ -61,13 +61,21 @@
             justify-content: center;
             border-bottom: 1px solid var(--color-border);
             padding: 0;
+            overflow-x: auto; /* Allow horizontal scrolling on small screens */
+            -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
         }
+        .tabs::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari, Opera */
+            display: none;
+        }
+
         .tab-button {
-            flex-grow: 1;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+            min-width: fit-content; /* Ensure text doesn't wrap inside button */
             text-align: center;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1rem; /* Adjusted padding for mobile */
             cursor: pointer;
-            white-space: nowrap;
+            white-space: nowrap; /* Keep text on single line */
             font-weight: 600;
             color: var(--color-text-muted); /* 不活躍分頁文字色 */
             border-bottom: 3px solid transparent;
@@ -87,6 +95,15 @@
             color: var(--color-text-dark);
             background-color: var(--color-body-bg); /* Hover時的微背景色 */
         }
+        @media (min-width: 768px) { /* Restore larger padding on medium screens */
+            .tab-button {
+                padding: 1rem 1.5rem;
+                flex-grow: 1; /* Allow stretching on larger screens */
+            }
+            .tabs {
+                overflow-x: hidden; /* Hide scrollbar on larger screens */
+            }
+        }
 
         /* Sub-tabs styles */
         .sub-tabs {
@@ -96,11 +113,18 @@
             background-color: rgba(112, 147, 176, 0.05); /* 子分頁背景色 */
             border-radius: 0.75rem 0.75rem 0 0;
             margin-top: 1rem;
+            overflow-x: auto; /* Allow horizontal scrolling on small screens */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .sub-tabs::-webkit-scrollbar {
+            display: none;
         }
         .sub-tab-button {
-            flex-grow: 1;
+            flex-shrink: 0;
+            min-width: fit-content;
             text-align: center;
-            padding: 0.75rem 1.25rem;
+            padding: 0.75rem 1rem; /* Adjusted padding for mobile */
             cursor: pointer;
             white-space: nowrap;
             font-weight: 600;
@@ -122,10 +146,19 @@
             color: var(--color-text-dark);
             background-color: rgba(112, 147, 176, 0.08); /* Hover時的微背景色 */
         }
+        @media (min-width: 768px) {
+            .sub-tab-button {
+                padding: 0.75rem 1.25rem;
+                flex-grow: 1;
+            }
+            .sub-tabs {
+                overflow-x: hidden;
+            }
+        }
 
         .sub-tab-content {
             display: none;
-            padding: 2.5rem;
+            padding: 1.5rem; /* Adjusted padding for mobile */
             background-color: var(--color-card-bg);
             max-width: 900px;
             margin-left: auto;
@@ -134,11 +167,16 @@
         .sub-tab-content.active {
             display: block;
         }
+        @media (min-width: 768px) {
+            .sub-tab-content {
+                padding: 2.5rem;
+            }
+        }
 
         /* Tab content styling */
         .tab-content {
             display: none;
-            padding: 2.5rem;
+            padding: 1.5rem; /* Adjusted padding for mobile */
             background-color: var(--color-card-bg);
             max-width: 900px;
             margin-left: auto;
@@ -147,15 +185,25 @@
         .tab-content.active {
             display: block;
         }
+        @media (min-width: 768px) {
+            .tab-content {
+                padding: 2.5rem;
+            }
+        }
 
         /* General card styles */
         .card {
             background-color: var(--color-card-bg);
             border-radius: 0.75rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            padding: 2.5rem;
+            padding: 1.5rem; /* Adjusted padding for mobile */
             border: 1px solid var(--color-border);
             margin-bottom: 2rem;
+        }
+        @media (min-width: 768px) {
+            .card {
+                padding: 2.5rem;
+            }
         }
 
         /* Collapsible Card specific styles */
@@ -171,13 +219,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 2.5rem;
-            font-size: 1.5rem;
+            padding: 1rem 1.5rem; /* Adjusted padding for mobile */
+            font-size: 1.25rem; /* Adjusted font size for mobile */
             font-weight: 700;
             color: var(--color-norway-blue-accent); /* 可收合標題文字色 */
             cursor: pointer;
             border-bottom: 1px solid var(--color-border);
             transition: background-color 0.2s ease-in-out;
+        }
+        @media (min-width: 768px) {
+            .collapsible-header {
+                padding: 1.5rem 2.5rem;
+                font-size: 1.5rem;
+            }
         }
 
         .collapsible-header:hover {
@@ -199,9 +253,14 @@
 
         .collapsible-content {
             display: none;
-            padding: 0 2.5rem 2.5rem 2.5rem;
+            padding: 0 1.5rem 1.5rem 1.5rem; /* Adjusted padding for mobile */
             overflow: hidden;
             transition: all 0.3s ease-out;
+        }
+        @media (min-width: 768px) {
+            .collapsible-content {
+                padding: 0 2.5rem 2.5rem 2.5rem;
+            }
         }
 
         .collapsible-content p {
@@ -210,29 +269,48 @@
 
         /* Section heading styles for content within tabs */
         .content-section-heading {
-            font-size: 2.25rem;
+            font-size: 1.75rem; /* Adjusted font size for mobile */
             font-weight: 700;
             color: var(--color-norway-red-accent); /* 主要內容標題顏色 */
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem; /* Adjusted margin for mobile */
             text-align: center;
+        }
+        @media (min-width: 768px) {
+            .content-section-heading {
+                font-size: 2.25rem;
+                margin-bottom: 2rem;
+            }
         }
 
         /* Sub-headings within content */
         h3.sub-heading {
-            font-size: 1.875rem;
+            font-size: 1.5rem; /* Adjusted font size for mobile */
             font-weight: 700;
             color: var(--color-norway-blue-accent); /* 內容子標題顏色 */
-            margin-top: 2.5rem;
-            margin-bottom: 1.5rem;
+            margin-top: 2rem; /* Adjusted margin for mobile */
+            margin-bottom: 1rem; /* Adjusted margin for mobile */
+        }
+        @media (min-width: 768px) {
+            h3.sub-heading {
+                font-size: 1.875rem;
+                margin-top: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
         }
 
         /* Paragraph and list text styles */
         p, ul {
-            line-height: 1.8;
-            font-size: 1.05rem;
+            line-height: 1.6; /* Adjusted line height for mobile */
+            font-size: 0.95rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 768px) {
+            p, ul {
+                line-height: 1.8;
+                font-size: 1.05rem;
+            }
         }
         ul.list-disc li, ul.list-circle li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem; /* Adjusted margin for mobile */
         }
         /* Specific style for price lists to ensure alignment */
         .price-list li {
@@ -240,11 +318,21 @@
             justify-content: space-between;
             align-items: baseline;
             margin-bottom: 0.5rem;
-            padding-right: 2rem; /* Add some padding to the right for better visual */
+            padding-right: 1rem; /* Adjusted padding for mobile */
+        }
+        @media (min-width: 768px) {
+            .price-list li {
+                padding-right: 2rem;
+            }
         }
         .price-list li span:first-child {
             flex-shrink: 0;
-            margin-right: 1rem; /* Space between label and price */
+            margin-right: 0.5rem; /* Adjusted space for mobile */
+        }
+        @media (min-width: 768px) {
+            .price-list li span:first-child {
+                margin-right: 1rem;
+            }
         }
         .price-list li span:last-child {
             text-align: right;
@@ -252,23 +340,52 @@
         }
 
         /* Table specific styles */
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
+        .table-responsive-wrapper {
+            overflow-x: auto; /* Enable horizontal scroll for tables */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-norway-blue-accent) #f1f1f1;
             margin-top: 1.5rem;
             margin-bottom: 1rem;
-            font-size: 1rem;
+            border: 1px solid var(--color-border); /* Add border to wrapper for consistent look */
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .price-table {
+            width: 100%;
+            min-width: 400px; /* Ensure table has minimum width to enable scrolling */
+            border-collapse: collapse;
+            font-size: 0.95rem; /* Adjusted font size for mobile */
             text-align: center;
+        }
+        @media (min-width: 768px) {
+            .price-table {
+                min-width: auto; /* Reset min-width on larger screens */
+                font-size: 1rem;
+            }
+            .table-responsive-wrapper {
+                overflow-x: hidden; /* Hide scrollbar on larger screens */
+            }
         }
         .price-table th, .price-table td {
             border: 1px solid var(--color-border);
-            padding: 0.75rem;
+            padding: 0.6rem; /* Adjusted padding for mobile */
+        }
+        @media (min-width: 768px) {
+            .price-table th, .price-table td {
+                padding: 0.75rem;
+            }
         }
         .price-table th {
             background-color: var(--color-norway-blue-accent); /* 表格頭部背景色 */
-            color: var(--color-norway-white-light); /* 表格頭部文字色 */
+            color: #FFFFFF; /* 表格頭部文字色 (White for better contrast) */
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem; /* Adjusted font size for mobile */
+        }
+        @media (min-width: 768px) {
+            .price-table th {
+                font-size: 1.1rem;
+            }
         }
         .price-table td {
             background-color: var(--color-card-bg);
@@ -277,18 +394,7 @@
         .price-table tr:nth-child(even) td {
             background-color: rgba(112, 147, 176, 0.05); /* 斑馬條紋效果 */
         }
-        .price-table th:first-child {
-            border-top-left-radius: 0.5rem;
-        }
-        .price-table th:last-child {
-            border-top-right-radius: 0.5rem;
-        }
-        .price-table tr:last-child td:first-child {
-            border-bottom-left-radius: 0.5rem;
-        }
-        .price-table tr:last-child td:last-child {
-            border-bottom-right-radius: 0.5rem;
-        }
+        /* No need for border-radius on th/td as the wrapper has it */
 
 
         /* Modal styles */
@@ -307,36 +413,52 @@
         }
         .modal-content {
             background-color: var(--color-card-bg);
-            padding: 2.5rem;
+            padding: 1.5rem; /* Adjusted padding for mobile */
             border-radius: 0.75rem;
-            width: 90%;
+            width: 95%; /* Increased width for mobile */
             max-width: 700px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: relative;
             animation: fadeIn 0.3s ease-out;
             color: var(--color-text-dark);
-            max-height: 80vh; /* 限制高度以便內容可捲動 */
+            max-height: 90vh; /* Increased max-height for mobile */
             overflow-y: auto; /* 啟用模態框內容捲動 */
+        }
+        @media (min-width: 768px) {
+            .modal-content {
+                padding: 2.5rem;
+                width: 90%;
+                max-height: 80vh;
+            }
         }
         .modal-content h3 {
             color: var(--color-norway-red-accent); /* 模態框標題顏色 */
-            font-size: 2.25rem;
+            font-size: 1.75rem; /* Adjusted font size for mobile */
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem; /* Adjusted margin for mobile */
+        }
+        @media (min-width: 768px) {
+            .modal-content h3 {
+                font-size: 2.25rem;
+                margin-bottom: 1.5rem;
+            }
         }
         .close-button {
             color: var(--color-text-muted);
             position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2.5rem;
+            top: 0.75rem; /* Adjusted position for mobile */
+            right: 1rem; /* Adjusted position for mobile */
+            font-size: 2rem; /* Adjusted font size for mobile */
             font-weight: bold;
             cursor: pointer;
             transition: color 0.2s;
         }
-        .close-button:hover,
-        .close-button:focus {
-            color: var(--color-norway-red-accent);
+        @media (min-width: 768px) {
+            .close-button {
+                top: 1rem;
+                right: 1.5rem;
+                font-size: 2.5rem;
+            }
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-30px); }
@@ -354,18 +476,16 @@
             border: none;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out;
+            width: 100%; /* Full width on mobile */
+        }
+        @media (min-width: 768px) {
+            .map-button {
+                width: auto; /* Auto width on larger screens */
+            }
         }
 
         .map-button:hover {
             background-color: #5d7a92; /* Slightly darker blue on hover */
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: var(--color-norway-blue-accent); /* 頁腳背景色 */
-            color: var(--color-norway-white-light);
-            padding: 3rem 0;
-            text-align: center;
         }
 
         /* Specific styles for itinerary items */
@@ -376,44 +496,75 @@
 
         .itinerary-icon {
             flex-shrink: 0;
-            width: 3.5rem;
-            height: 3.5rem;
+            width: 3rem; /* Slightly smaller icon for mobile */
+            height: 3rem;
             background-color: rgba(112, 147, 176, 0.1); /* 圖標背景色 */
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 1rem;
-            font-size: 1.8rem;
+            margin-right: 0.8rem; /* Adjusted margin for mobile */
+            font-size: 1.5rem; /* Adjusted font size for mobile */
             color: var(--color-norway-blue-accent); /* 圖標顏色 */
+        }
+        @media (min-width: 768px) {
+            .itinerary-icon {
+                width: 3.5rem;
+                height: 3.5rem;
+                margin-right: 1rem;
+                font-size: 1.8rem;
+            }
         }
 
         .itinerary-title-group {
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            margin-right: 1rem;
+            margin-right: 0.5rem; /* Adjusted margin for mobile */
+        }
+        @media (min-width: 768px) {
+            .itinerary-title-group {
+                margin-right: 1rem;
+            }
         }
 
         .itinerary-time-in-header {
-            font-size: 0.9rem;
+            font-size: 0.8rem; /* Adjusted font size for mobile */
             font-weight: 500;
             color: var(--color-text-muted);
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.1rem; /* Adjusted margin for mobile */
+        }
+        @media (min-width: 768px) {
+            .itinerary-time-in-header {
+                font-size: 0.9rem;
+                margin-bottom: 0.2rem;
+            }
         }
 
         .itinerary-title.in-header {
-            font-size: 1.3rem;
+            font-size: 1.1rem; /* Adjusted font size for mobile */
             font-weight: 700;
             color: var(--color-norway-red-accent); /* 行程標題顏色 */
             line-height: 1.2;
         }
+        @media (min-width: 768px) {
+            .itinerary-title.in-header {
+                font-size: 1.3rem;
+            }
+        }
 
         .itinerary-description {
-            font-size: 0.95rem;
+            font-size: 0.9rem; /* Adjusted font size for mobile */
             color: var(--color-text-dark);
-            line-height: 1.6;
-            margin-top: 1rem;
+            line-height: 1.5; /* Adjusted line height for mobile */
+            margin-top: 0.8rem; /* Adjusted margin for mobile */
+        }
+        @media (min-width: 768px) {
+            .itinerary-description {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-top: 1rem;
+            }
         }
 
         /* New class for details links */
@@ -421,9 +572,14 @@
             color: var(--color-norway-blue-accent); /* 詳情連結顏色 */
             text-decoration: underline;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.9rem; /* Adjusted font size for mobile */
             margin-left: 0.5rem;
             transition: color 0.2s ease-in-out;
+        }
+        @media (min-width: 768px) {
+            .details-link {
+                font-size: 0.95rem;
+            }
         }
         .details-link:hover {
             color: var(--color-norway-red-accent); /* 詳情連結Hover顏色 */
@@ -431,24 +587,31 @@
 
         /* Short description for itinerary items in suggestions */
         .itinerary-description-short {
-            font-size: 1rem;
+            font-size: 0.95rem; /* Adjusted font size for mobile */
             color: var(--color-text-muted);
             margin-top: 0.5rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
+            margin-bottom: 0.8rem; /* Adjusted margin for mobile */
+            line-height: 1.4; /* Adjusted line height for mobile */
+        }
+        @media (min-width: 768px) {
+            .itinerary-description-short {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                line-height: 1.5;
+            }
         }
     </style>
 </head>
 <body>
 
-    <main class="container mx-auto p-6 md:p-12 max-w-6xl">
+    <main class="container mx-auto p-4 md:p-12 max-w-6xl"> <!-- Adjusted base padding for mobile -->
 
         <!-- Main Title and Subtitle above tabs-container -->
-        <div class="text-center mb-8">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-[var(--color-header-main-title)] mb-2 flex items-center justify-center">
+        <div class="text-center mb-6"> <!-- Adjusted margin for mobile -->
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[var(--color-header-main-title)] mb-1 flex items-center justify-center"> <!-- Adjusted font size for mobile -->
                 <span class="flag">🇳🇴</span>奧斯陸
             </h1>
-            <p class="text-xl md:text-2xl font-medium text-[var(--color-header-sub-title)] mb-4">
+            <p class="text-lg md:text-2xl font-medium text-[var(--color-header-sub-title)] mb-4"> <!-- Adjusted font size for mobile -->
                 <a href="#" id="accommodation-link-hero" class="text-[var(--color-header-sub-title)] hover:text-[var(--color-norway-red-accent)] underline">
                     <span class="mr-2">&#127968;</span>Fantastic apartment
                 </a>
@@ -456,7 +619,7 @@
         </div>
 
         <!-- Tabs Section -->
-        <section id="tabs-section" class="my-10 tabs-container">
+        <section id="tabs-section" class="my-8 tabs-container"> <!-- Adjusted margin for mobile -->
             <div class="tabs">
                 <!-- Main Tab buttons -->
                 <button class="tab-button active" data-tab="overview">總覽</button>
@@ -469,7 +632,7 @@
 
             <!-- Tab content for "總覽" -->
             <div id="overview-tab" class="tab-content active">
-                <p class="text-lg leading-relaxed text-gray-700 mb-6">
+                <p class="text-base leading-relaxed text-gray-700 mb-4"> <!-- Adjusted font size and margin -->
                     歡迎來到奧斯陸，這座位於挪威東南部的首都，坐落在奧斯陸峽灣的盡頭，被蒼翠的森林和連綿的丘陵環抱。這裡不僅是挪威的經濟、文化和政治中心，更是一座將深厚歷史底蘊與前瞻性現代精神完美融合的城市。
                 </p>
 
@@ -480,7 +643,7 @@
                         <span class="arrow-icon">&#9660;</span>
                     </div>
                     <div class="collapsible-content">
-                        <p class="text-lg leading-relaxed text-gray-700">
+                        <p class="text-base leading-relaxed text-gray-700"> <!-- Adjusted font size -->
                             奧斯陸的歷史可以追溯到公元1000年左右，由維京國王哈拉爾三世於1040年左右建立，並在1299年成為挪威的首都。幾經戰火與重建，特別是1624年大火後，丹麥-挪威國王克里斯蒂安四世在原址西側重建了城市，並以他的名字命名為「克里斯蒂安尼亞」（Christiania）。直到1925年，這座城市才重新恢復了其古老的挪威名稱——奧斯陸。
                         </p>
                     </div>
@@ -493,19 +656,19 @@
                         <span class="arrow-icon">&#9660;</span>
                     </div>
                     <div class="collapsible-content">
-                        <p class="text-lg leading-relaxed text-gray-700">
+                        <p class="text-base leading-relaxed text-gray-700"> <!-- Adjusted font size -->
                             作為一座綠色環保的城市，奧斯陸曾榮獲「歐洲綠色首都」稱號。這裡擁有豐富的維京時代遺產、中世紀堡壘、皇家宮殿，以及世界級的藝術博物館，如孟克博物館和維格朗雕塑公園。其現代建築，如奧斯陸歌劇院，也以創新設計成為城市新地標。無論是峽灣跳島，還是冬季滑雪，奧斯陸都提供獨特的北歐魅力與無限的戶外探險可能，讓訪客能找到屬於自己的樂趣。
                         </p>
                     </div>
                 </div>
                 <!-- Image moved outside the collapsible card but inside the overview tab -->
-                <img src="https://res.cloudinary.com/gofjords-com/images/w_2560,h_1600,c_scale/f_auto,q_auto:eco/v1700208495/Destinations/Oslo/Oslo-opera-house-waterfront-photo-Bob-Engelsen/Oslo-opera-house-waterfront-photo-Bob-Engelsen.jpg?_i=AA" alt="奧斯陸歌劇院與峽灣" class="w-full h-auto rounded-lg shadow-md mt-6" onerror="this.onerror=null;this.src='https://placehold.co/700x400/DDEEEF/000000?text=Oslo+Fjord+Placeholder';">
+                <img src="https://res.cloudinary.com/gofjords-com/images/w_2560,h_1600,c_scale/f_auto,q_auto:eco/v1700208495/Destinations/Oslo/Oslo-opera-house-waterfront-photo-Bob-Engelsen/Oslo-opera-house-waterfront-photo-Bob-Engelsen.jpg?_i=AA" alt="奧斯陸歌劇院與峽灣" class="w-full h-auto rounded-lg shadow-md mt-4" onerror="this.onerror=null;this.src='https://placehold.co/700x400/DDEEEF/000000?text=Oslo+Fjord+Placeholder';"> <!-- Adjusted margin -->
             </div>
 
             <!-- Tab content for "晴家先走走" -->
             <div id="solo-itinerary-tab" class="tab-content">
                 <!-- Day 1: July 17 -->
-                <div class="day-card mb-8">
+                <div class="day-card mb-6"> <!-- Adjusted margin -->
                     <h3 class="sub-heading">7月17日</h3>
                     <!-- Itinerary Item 1: Arrival -->
                     <div class="collapsible-card itinerary-collapsible-item">
@@ -519,10 +682,10 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1"> <!-- Adjusted space-y -->
                                     <li><strong>航班：</strong> Transavia HV5861，從愛因荷芬（EIN）出發，預計於下午1:35抵達奧斯陸加勒穆恩機場（OSL）。</li>
                                     <li><strong>前往住宿地點（Hollendergata 2B）建議：：</strong>
-                                        <ul class="list-circle list-inside ml-6 space-y-1">
+                                        <ul class="list-circle list-inside ml-4 space-y-0.5"> <!-- Adjusted ml and space-y -->
                                             <li><strong>Flytoget（機場快線列車）：</strong> 最快選擇，約19分鐘抵達奧斯陸中央車站。16歲以下兒童在成人陪同下免費。</li>
                                             <li><strong>Vy列車（國家鐵路）：：</strong> 更經濟實惠的選擇，奧斯陸通行證涵蓋此費用。</li>
                                             <li><strong>Bolt（叫車服務）：</strong> 門到門服務，適合攜帶大量行李或清晨/深夜出行。</li>
@@ -544,7 +707,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>您的住宿確認入住時間為下午3:00。</li>
                                     <li>抵達後，請花時間辦理入住、整理行李並安頓。</li>
                                 </ul>
@@ -563,7 +726,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>建議在您住宿地點Hollendergata 2B周邊的<strong>Gamle Oslo（老城區）</strong>進行一次輕鬆悠閒的漫步，熟悉周圍環境。</li>
                                     <li>可以步行前往附近的<strong>奧斯陸公車總站（Oslo Bussterminal）</strong>或<strong>奧斯陸中央車站（Oslo Central Station）</strong>區域，以便熟悉未來幾天的主要交通樞紐。</li>
                                 </ul>
@@ -573,7 +736,7 @@
                 </div>
 
                 <!-- Day 2: July 18 -->
-                <div class="day-card mb-8">
+                <div class="day-card mb-6"> <!-- Adjusted margin -->
                     <h3 class="sub-heading">7月18日</h3>
                     <!-- Itinerary Item 1: Ekebergparken -->
                     <div class="collapsible-card itinerary-collapsible-item">
@@ -587,7 +750,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>前往<strong>埃克貝格公園</strong>，探索園內藝術雕塑。</li>
                                     <li>欣賞俯瞰奧斯陸市區和峽灣的壯麗全景。</li>
                                     <li>非常適合悠閒漫步、欣賞藝術和享受自然風光。</li>
@@ -608,7 +771,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>前往戶外海水泳池<strong>Sørenga Sjøbad</strong>，享受游泳、日光浴。</li>
                                     <li>欣賞峽灣、歌劇院和Barcode區的景色。</li>
                                     <li>此處為免費開放。</li>
@@ -629,7 +792,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>在充滿活力的海濱長廊<strong>阿克爾碼頭（Aker Brygge）</strong>悠閒漫步，欣賞峽灣美景。</li>
                                     <li>該區域以其現代建築、時尚商店和熱鬧氛圍而聞名。</li>
                                 </ul>
@@ -642,7 +805,7 @@
             <!-- Tab content for "兩家一起遊" -->
             <div id="group-itinerary-tab" class="tab-content">
                 <!-- Sub-tabs for Group Itinerary -->
-                <div class="sub-tabs mb-6">
+                <div class="sub-tabs mb-4"> <!-- Adjusted margin -->
                     <button class="sub-tab-button active" data-sub-tab="time-flow">時間流程</button>
                     <button class="sub-tab-button" data-sub-tab="suggestions">行程建議</button>
                 </div>
@@ -661,7 +824,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>睿家搭乘土耳其航空TK1751航班從伊斯坦堡（IST）飛往奧斯陸（OSL），預計於上午11:00抵達奧斯陸加勒穆恩機場。</li>
                                     <li>約在中午時分抵達奧斯陸中央車站（Oslo S），協助睿家輕鬆來到住宿地點安頓下來。</li>
                                 </ul>
@@ -681,7 +844,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>這兩天將是兩家人共同深入探索奧斯陸的精華。</li>
                                     <li>行程將涵蓋城市中心的文化與歷史地標、比格迪島上的著名博物館，以及維格朗公園的藝術氛圍和霍爾門科倫滑雪跳台的壯麗全景。</li>
                                     <li>詳細活動請參考「行程建議」子分頁。</li>
@@ -702,7 +865,7 @@
                         </div>
                         <div class="collapsible-content">
                             <div class="itinerary-description">
-                                <ul class="list-disc list-inside space-y-2">
+                                <ul class="list-disc list-inside space-y-1">
                                     <li>為確保上午6:20的火車準時，建議最遲於5:45從住宿地點出發，可選擇預訂Bolt或計程車，或提前確認公共交通。</li>
                                     <li>從奧斯陸中央車站搭乘火車，開啟令人嘆為觀止的挪威縮影之旅。火車票費用另計。</li>
                                 </ul>
@@ -870,7 +1033,7 @@
                                     <li>一個美麗的半島，以其世界級博物館的集中而聞名。</li>
                                     <li>從阿克爾碼頭搭乘渡輪可達，渡輪費用包含在奧斯陸通行證中。</li>
                                     <li>建議選擇一兩個感興趣的博物館，例如：
-                                        <ul class="list-circle list-inside ml-6 space-y-1">
+                                        <ul class="list-circle list-inside ml-4 space-y-0.5">
                                             <li><strong>挪威民俗博物館 (Norsk Folkemuseum)</strong>：成人票約 195 挪威克朗；18歲以下兒童免費。</li>
                                             <li><strong>前進號博物館（The Fram Museum）：</strong> 專門介紹挪威極地探險，展示了原始的<strong>前進號船</strong>。成人票約 180 挪威克朗；兒童/學生約 70 挪威克朗；持奧斯陸通行證免費。</li>
                                         </ul>
@@ -910,11 +1073,11 @@
                 <h2 class="content-section-heading">奧斯陸通行證（Oslo Pass）詳情</h2>
 
                 <div class="card mb-8">
-                    <h3 class="text-2xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">通行證優勢</h3>
-                    <p class="text-lg text-gray-700 mb-4">
+                    <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">通行證優勢</h3> <!-- Adjusted font size and margin -->
+                    <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
                         奧斯陸通行證為您的奧斯陸之旅提供卓越的價值。它涵蓋了：
                     </p>
-                    <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                    <ul class="list-disc list-inside space-y-1.5 text-base text-gray-700"> <!-- Adjusted space-y and font size -->
                         <li>免費進入眾多博物館和景點
                             <a href="#" class="details-link" data-modal-target="freeAttractionsModal">詳情按此</a>
                         </li>
@@ -924,41 +1087,43 @@
                             <a href="#" class="details-link" data-modal-target="discountedOffersModal">詳情按此</a>
                         </li>
                     </ul>
-                    <p class="text-lg font-medium text-[var(--color-norway-red-accent)] mt-4">
+                    <p class="text-base font-medium text-[var(--color-norway-red-accent)] mt-3"> <!-- Adjusted font size and margin -->
                         <strong>強烈建議：</strong>購買一張奧斯陸通行證，並策略性地啟用，以最大化其效益。例如，您可以選擇在遊覽博物館和需要頻繁搭乘公共交通的日期啟用。
                     </p>
                 </div>
 
                 <div class="card">
-                    <h3 class="text-2xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">效期與購買方式</h3>
-                    <p class="text-lg text-gray-700 mb-4">
+                    <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">效期與購買方式</h3> <!-- Adjusted font size and margin -->
+                    <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
                         有效期選擇：通行證有24、48或72小時三種效期可供選擇，您可以根據您的行程長度選擇最適合的時長。
                     </p>
-                    <table class="price-table rounded-lg overflow-hidden shadow-md">
-                        <thead>
-                            <tr>
-                                <th>票種</th>
-                                <th>24H</th>
-                                <th>48H</th>
-                                <th>72H</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>成人</td>
-                                <td>550 挪威克朗</td>
-                                <td>800 挪威克朗</td>
-                                <td>945 挪威克朗</td>
-                            </tr>
-                            <tr>
-                                <td>兒童</td>
-                                <td>275 挪威克朗</td>
-                                <td>400 挪威克朗</td>
-                                <td>475 挪威克朗</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="text-lg font-medium text-[var(--color-norway-red-accent)] mt-4">
+                    <div class="table-responsive-wrapper">
+                        <table class="price-table">
+                            <thead>
+                                <tr>
+                                    <th>票種</th>
+                                    <th>24H</th>
+                                    <th>48H</th>
+                                    <th>72H</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>成人</td>
+                                    <td>550 挪威克朗</td>
+                                    <td>800 挪威克朗</td>
+                                    <td>945 挪威克朗</td>
+                                </tr>
+                                <tr>
+                                    <td>兒童</td>
+                                    <td>275 挪威克朗</td>
+                                    <td>400 挪威克朗</td>
+                                    <td>475 挪威克朗</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-base font-medium text-[var(--color-norway-red-accent)] mt-3"> <!-- Adjusted font size and margin -->
                         <strong>注意：</strong>奧斯陸通行證不適用於更快的Flytoget機場快線列車或Flybussen。如果您的機場交通計劃使用這兩種方式，則需要另外購票。
                     </p>
                 </div>
@@ -970,8 +1135,8 @@
 
                 <!-- 推薦美食 Card -->
                 <div class="card mb-8">
-                    <h3 class="text-2xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">推薦美食 🍽️</h3>
-                    <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                    <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">推薦美食 🍽️</h3>
+                    <ul class="list-disc list-inside space-y-2 text-base text-gray-700"> <!-- Adjusted font size -->
                         <li><strong>挪威鮭魚 (Norwegian Salmon)</strong>：挪威的招牌美食，以其新鮮和高品質聞名，可製成煙燻、烤或生食等。</li>
                         <li><strong>棕色起司 (Brunost)</strong>：挪威特有的焦糖化乳清起司，味道香甜濃郁，通常搭配麵包或華夫餅享用。</li>
                         <li><strong>羊肉湯 (Fårikål)</strong>：挪威的國菜，由羊肉、高麗菜和黑胡椒慢燉而成，是冬季暖心的經典菜餚。</li>
@@ -982,12 +1147,12 @@
 
                 <!-- 推薦超市好物 Card -->
                 <div class="card">
-                    <h3 class="text-2xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">推薦超市好物 🛒</h3>
-                    <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                    <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">推薦超市好物 🛒</h3>
+                    <ul class="list-disc list-inside space-y-2 text-base text-gray-700"> <!-- Adjusted font size -->
                         <li><strong>Fløytemysost 棕色乳酪：</strong> 挪威最具代表性的產品之一，口感獨特帶有焦糖甜味，非常適合搭配麵包或華夫餅。</li>
-                        <li><strong>Sardiner 沙丁魚罐頭：</strong> 挪威海岸盛產沙丁魚，罐頭產品新鮮美味，是理想的伴手禮。</li>
-                        <li><strong>Stabburet 番茄鯖魚罐頭：</strong> 挪威家庭的經典食品，簡單美味，可以直接食用或搭配麵包。</li>
-                        <li><strong>Kaviar 魚子抹醬：</strong> 以鱈魚子製成的牙膏狀抹醬，味道鮮美，是早餐或點心的好選擇。</li>
+                        <li><strong>Sardiner 沙丁魚罐頭：：</strong> 挪威海岸盛產沙丁魚，罐頭產品新鮮美味，是理想的伴手禮。</li>
+                        <li><strong>Stabburet 番茄鯖魚罐頭：：</strong> 挪威家庭的經典食品，簡單美味，可以直接食用或搭配麵包。</li>
+                        <li><strong>Kaviar 魚子抹醬：：</strong> 以鱈魚子製成的牙膏狀抹醬，味道鮮美，是早餐或點心的好選擇。</li>
                         <li><strong>冷凍鮭魚 (Frozen Salmon)：：</strong> 挪威的鮭魚品質世界聞名，冷凍鮭魚方便攜帶，是將挪威海味帶回家的最佳方式。</li>
                         <li><strong>Fishkekaker 魚板：：</strong> 挪威傳統魚製品，口感Q彈，可作為小吃或烹飪食材。</li>
                         <li><strong>其他冷藏/冷凍食品：：</strong> 挪威超市的烤雞系列、蟹肉棒和煙燻熱狗都值得嘗試，方便即食。</li>
@@ -1004,19 +1169,19 @@
 
             <!-- Tab content for "注意事項" -->
             <div id="notes-tab" class="tab-content">
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-6 mb-6"> <!-- Adjusted gap and margin -->
                     <!-- 交通指南 (includes Ruter App details) -->
                     <div class="card col-span-2"> <!-- Spans two columns for better layout -->
-                        <h3 class="text-2xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">交通指南</h3>
-                        <p class="text-lg text-gray-700 mb-4">
+                        <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">交通指南</h3> <!-- Adjusted font size and margin -->
+                        <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
                             奧斯陸擁有廣泛且高效的公共交通網絡，由Ruter公司管理，包括公車、電車、地鐵（T-bane）和渡輪。這個網絡讓貴賓在城市內移動和前往景點變得輕而易舉。
                         </p>
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Ruter App下載（您的必備導航工具）</h4>
-                        <p class="text-lg text-gray-700 mb-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 mt-3">Ruter App下載（您的必備導航工具）</h4> <!-- Adjusted font size and margin -->
+                        <p class="text-base text-gray-700 mb-3"> <!-- Adjusted font size and margin -->
                             「Ruter」是奧斯陸和阿克什胡斯郡的官方公共交通應用程式。它提供全面的功能，讓您能夠查詢所有班次、規劃點對點行程、實時查看交通工具位置、並直接在手機上購買車票。<strong>建議：：</strong>強烈建議您在抵達奧斯陸之前或抵達後立即下載此應用程式。
                         </p>
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2 mt-4">機場接送</h4>
-                        <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 mt-3">機場接送</h4> <!-- Adjusted font size and margin -->
+                        <ul class="list-disc list-inside space-y-1.5 text-base text-gray-700"> <!-- Adjusted space-y and font size -->
                             <li><strong>Flytoget（機場快線列車）：</strong> 成人單程票價約 230-252 挪威克朗。</li>
                             <li><strong>Vy列車（國家鐵路）：：</strong> 成人單程票價約 120 挪威克朗。</li>
                             <li><strong>Bolt（叫車服務）：：</strong> 單程費用約 900-1300 挪威克朗。</li>
@@ -1025,8 +1190,8 @@
 
                     <!-- 實用提示 -->
                     <div class="card col-span-2"> <!-- Spans two columns for better layout -->
-                        <h3 class="text-2xl font-semibold text-[var(--color-norway-blue-accent)] mb-4">實用提示</h3>
-                        <ul class="list-disc list-inside space-y-2 text-lg text-gray-700">
+                        <h3 class="text-xl font-semibold text-[var(--color-norway-blue-accent)] mb-3">實用提示</h3> <!-- Adjusted font size and margin -->
+                        <ul class="list-disc list-inside space-y-1.5 text-base text-gray-700"> <!-- Adjusted space-y and font size -->
                             <li><strong>貨幣：：</strong> 挪威克朗（NOK）。信用卡廣泛接受。</li>
                             <li><strong>小費：：</strong> 非強制性，服務費已含。</li>
                             <li><strong>語言：：</strong> 官方語言挪威語，英語廣泛使用。</li>
@@ -1046,8 +1211,8 @@
     <div id="accommodationModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h3 class="text-3xl font-bold text-[var(--color-norway-blue-accent)] mb-4">住宿詳情</h3>
-            <div class="text-lg text-gray-700 space-y-3">
+            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">住宿詳情</h3> <!-- Adjusted font size and margin -->
+            <div class="text-base text-gray-700 space-y-2"> <!-- Adjusted font size and space-y -->
                 <p id="accommodation-address">地址：Hollendergata 2B 3 roms leilighet, Gamle Oslo, 奧斯陸0191, 挪威</p>
                 <p>入住：2025年7月17日 (星期四) 下午3:00</p>
                 <p>退房：2025年7月22日 (星期二)</p>
@@ -1055,11 +1220,11 @@
                 <p>入住方式：大樓管理員。請聯絡房東了解入住流程。</p>
                 <p>WiFi：在入住前48小時開始，您可以在這裡找到WiFi 登入資料。</p>
                 <p>房屋守則：</p>
-                <ul class="list-disc list-inside ml-4">
+                <ul class="list-disc list-inside ml-3"> <!-- Adjusted ml -->
                     <li>最多6位房客</li>
                     <li>禁止攜帶寵物</li>
                 </ul>
-                <p class="text-sm text-gray-500 mt-4">
+                <p class="text-xs text-gray-500 mt-3"> <!-- Adjusted font size and margin -->
                     您的住宿已確認將涵蓋整個旅程，從7月17日至7月22日。
                 </p>
                 <!-- New button to open map -->
@@ -1072,8 +1237,8 @@
     <div id="freeAttractionsModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h3 class="text-3xl font-bold text-[var(--color-norway-blue-accent)] mb-4">奧斯陸通行證涵蓋的免費景點與博物館</h3>
-            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">奧斯陸通行證涵蓋的免費景點與博物館</h3> <!-- Adjusted font size and margin -->
+            <ul class="list-disc list-inside text-base text-gray-700 space-y-2"> <!-- Adjusted font size and space-y -->
                 <li>阿克斯胡斯堡壘 (Akershus Fortress) 博物館部分 (堡壘區域免費)</li>
                 <li>康提基博物館 (The Kon-Tiki Museum)</li>
                 <li><strong>前進號博物館（The Fram Museum）：</strong>專門介紹挪威極地探險，展示了原始的<strong>前進號船</strong>。</li>
@@ -1088,7 +1253,7 @@
                 <li>奧斯陸峽灣公共渡輪 (前往比格迪島等)</li>
                 <!-- Add more popular attractions here -->
             </ul>
-            <p class="text-sm text-gray-500 mt-4">
+            <p class="text-xs text-gray-500 mt-3"> <!-- Adjusted font size and margin -->
                 此列表為常見且可能涵蓋的景點，建議在使用前透過奧斯陸通行證官方應用程式或網站再次確認最新資訊及開放時間。
             </p>
         </div>
@@ -1098,8 +1263,8 @@
     <div id="discountedOffersModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h3 class="text-3xl font-bold text-[var(--color-norway-blue-accent)] mb-4">奧斯陸通行證提供的觀光與餐廳折扣</h3>
-            <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+            <h3 class="text-xl font-bold text-[var(--color-norway-blue-accent)] mb-3">奧斯陸通行證提供的觀光與餐廳折扣</h3> <!-- Adjusted font size and margin -->
+            <ul class="list-disc list-inside text-base text-gray-700 space-y-2"> <!-- Adjusted font size and space-y -->
                 <li>部分觀光巴士及峽灣觀光遊船折扣</li>
                 <li>奧斯陸滑雪中心 (Oslo Winter Park) 滑雪票折扣 (冬季適用)</li>
                 <li>Tusenfryd 遊樂園門票折扣</li>
@@ -1108,7 +1273,7 @@
                 <li>部分商店購物折扣</li>
                 <!-- Add more typical discounted offers here -->
             </ul>
-            <p class="text-sm text-gray-500 mt-4">
+            <p class="text-xs text-gray-500 mt-3"> <!-- Adjusted font size and margin -->
                 此列表為常見折扣類型，具體折扣比例、參與商家及條款可能隨時變動，建議在使用前透過奧斯陸通行證官方應用程式或網站確認最新資訊。
             </p>
         </div>
